@@ -141,7 +141,6 @@ nnoremap <C-f> :NERDTreeFind<CR>
 
 " a mode for non-code text editing
 func! WordProcessorMode()
-    colorscheme gruvbox
     setlocal textwidth=80
     setlocal smartindent
     setlocal spell spelllang=en_us
