@@ -117,7 +117,20 @@ nnoremap <C-f> :NERDTreeFind<CR>
 "    autocmd FileType vim setlocal foldmethod=marker
 "augroup END
 
-" More Vimscripts code goes here.
+func! WordProcessorMode()
+    setlocal textwidth=80
+    setlocal smartindent
+    setlocal noexpandtab
+    " spellcheck on
+    setlocal spell spelllang=en_us
+    " remove spellcheck highlighting style
+    hi clear SpellBad
+    " add underline style instead
+    hi SpellBad cterm=underline
+    " do the same for capitalization 
+    hi clear SpellCap
+    hi SpellCap cterm=underline
+endfu
 
 " }}}
 
@@ -140,12 +153,6 @@ nnoremap <C-f> :NERDTreeFind<CR>
 "set laststatus=2
 
 " a mode for non-code text editing
-func! WordProcessorMode()
-    setlocal textwidth=80
-    setlocal smartindent
-    setlocal spell spelllang=en_us
-    setlocal noexpandtab
-endfu
 
 " }}}
 
