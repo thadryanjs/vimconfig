@@ -156,3 +156,6 @@ endfu
 
 " }}}
 
+
+"let @f=':NERDTree:vert botright term:term'
+let @f=':NERDTree:vert botright term20>:term'
