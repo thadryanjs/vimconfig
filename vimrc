@@ -36,6 +36,9 @@ set expandtab
 " Do not save backup files.
 set nobackup
 
+" I don't want the swapfiles
+set noswapfile
+
 " Do not let cursor scroll below or above N number of lines when scrolling.
 "set scrolloff=10
 
@@ -77,6 +80,8 @@ set wildmode=list:longest
 " Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
+
+
 " PLUGINS ---------------------------------------------------------------- {{{
 
 call plug#begin('~/.vim/plugged')
@@ -95,9 +100,12 @@ call plug#end()
 " now we can use the colorscheme color
 colorscheme Atelier_SavannaDark
 
+
+
 "MAPPINGS --------------------------------------------------------------- {{{
 
-inoremap <f8> <Esc>
+"inoremap <f8> <Esc>
+imap jj <Esc>
 
 " filetree plugin mappings
 nnoremap <leader>n :NERDTree<CR>
@@ -106,6 +114,7 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
 " }}}
+
 
 
 " VIMSCRIPT -------------------------------------------------------------- {{{
@@ -135,6 +144,7 @@ endfu
 " }}}
 
 
+
 " STATUS LINE ------------------------------------------------------------ {{{
 
 " Clear status line when vimrc is reloaded.
@@ -157,5 +167,11 @@ endfu
 " }}}
 
 
-"let @f=':NERDTree:vert botright term:term'
+
+" MACROS  --------------------------------------------------------------- {{{
+
 let @f=':NERDTree:vert botright term20>:term'
+
+" }}}
+
+
