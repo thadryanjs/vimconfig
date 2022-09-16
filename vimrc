@@ -98,7 +98,7 @@ call plug#end()
 " }}}
 
 " now we can use the colorscheme color
-colorscheme Atelier_SavannaDark
+" colorscheme Atelier_SavannaDark
 
 
 
@@ -137,6 +137,25 @@ func! WordProcessorMode()
     " add underline style instead
     hi SpellBad cterm=underline
     " do the same for capitalization 
+    hi clear SpellCap
+    hi SpellCap cterm=underline
+endfu
+
+func! WordProcessorModeSoftWrap()
+    set textwidth=0
+    set wrapmargin=0
+    set nonumber
+    set wrap
+    set linebreak " (optional - breaks by word rather than character)
+    setlocal smartindent
+    setlocal noexpandtab
+    " spellcheck on
+    setlocal spell spelllang=en_us
+    " remove spellcheck highlighting style
+    hi clear SpellBad
+    " add underline style instead
+    hi SpellBad cterm=underline
+    " do the same for capitalization
     hi clear SpellCap
     hi SpellCap cterm=underline
 endfu
