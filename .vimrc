@@ -92,14 +92,13 @@ call plug#begin('~/.vim/plugged')
     " for the filetree 
     Plug 'preservim/nerdtree'
     Plug 'flazz/vim-colorschemes'
-    Plug 'Townk/vim-autoclose'
 
 call plug#end()
 
 " }}}
 
 " now we can use the colorscheme color
-colorscheme Atelier_SavannaDark
+" colorscheme Atelier_SavannaDark
 
 
 
@@ -138,6 +137,29 @@ func! WordProcessorMode()
     " add underline style instead
     hi SpellBad cterm=underline
     " do the same for capitalization 
+    hi clear SpellCap
+    hi SpellCap cterm=underline
+endfu
+
+func! WordProcessorModeSoftWrap()
+    set textwidth=0
+    set wrapmargin=0
+    set nonumber
+    set wrap
+    " Have j and k navigate visual lines rather than logical ones
+    nmap j gj
+    nmap k gk
+    " (optional - breaks by word rather than character)
+    set linebreak
+    setlocal smartindent
+    setlocal noexpandtab
+    " spellcheck on
+    setlocal spell spelllang=en_us
+    " remove spellcheck highlighting style
+    hi clear SpellBad
+    " add underline style instead
+    hi SpellBad cterm=underline
+    " do the same for capitalization
     hi clear SpellCap
     hi SpellCap cterm=underline
 endfu
