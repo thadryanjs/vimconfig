@@ -107,6 +107,10 @@ call plug#end()
 "inoremap <f8> <Esc>
 imap jj <Esc>
 
+" navigate visual lines not logical ones
+nmap j gj
+nmap k gk
+
 " filetree plugin mappings
 nnoremap <leader>n :NERDTree<CR>
 nnoremap <C-n> :NERDTreeFocus<CR>
