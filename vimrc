@@ -104,6 +104,10 @@ call plug#end()
 
 "MAPPINGS --------------------------------------------------------------- {{{
 
+" skip visual lines not technical ones
+nnoremap j gj
+nnoremap k gk
+
 "inoremap <f8> <Esc>
 imap jj <Esc>
 
