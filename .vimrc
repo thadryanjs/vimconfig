@@ -114,6 +114,8 @@ imap jj <Esc>
 " navigate visual lines not logical ones
 nmap j gj
 nmap k gk
+nmap <C-c> "+y
+nmap <C-v> "+p
 
 " filetree plugin mappings
 nnoremap <leader>n :NERDTree<CR>
