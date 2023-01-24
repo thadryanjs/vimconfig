@@ -92,6 +92,10 @@ call plug#begin('~/.vim/plugged')
     " for the filetree 
     Plug 'preservim/nerdtree'
     Plug 'flazz/vim-colorschemes'
+"     Plug 'quarto-dev/quarto-nvim'
+"     Plug 'neovim/nvim-lspconfig'
+"     Plug 'jmbuhr/otter.nvim'
+
 
 call plug#end()
 
@@ -130,22 +134,22 @@ nnoremap <C-f> :NERDTreeFind<CR>
 "    autocmd FileType vim setlocal foldmethod=marker
 "augroup END
 
-func! WordProcessorMode()
-    setlocal textwidth=80
-    setlocal smartindent
-    setlocal noexpandtab
-    " spellcheck on
-    setlocal spell spelllang=en_us
-    " remove spellcheck highlighting style
-    hi clear SpellBad
-    " add underline style instead
-    hi SpellBad cterm=underline
-    " do the same for capitalization 
-    hi clear SpellCap
-    hi SpellCap cterm=underline
-endfu
+" func! WordProcessorMode()
+"     setlocal textwidth=80
+"     setlocal smartindent
+"     setlocal noexpandtab
+"     " spellcheck on
+"     setlocal spell spelllang=en_us
+"     " remove spellcheck highlighting style
+"     hi clear SpellBad
+"     " add underline style instead
+"     hi SpellBad cterm=underline
+"     " do the same for capitalization 
+"     hi clear SpellCap
+"     hi SpellCap cterm=underline
+" endfu
 
-func! WordProcessorModeSoftWrap()
+func! WordProcessorMode()
     set textwidth=0
     set wrapmargin=0
     set nonumber
