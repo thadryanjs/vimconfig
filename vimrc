@@ -18,11 +18,6 @@ syntax on
 
 " Add numbers to each line on the left-hand side.
 set number
-" Highlight cursor line underneath the cursor horizontally.
-" set cursorline
-
-" Highlight cursor line underneath the cursor vertically.
-" set cursorcolumn
 
 " Set shift width to 4 spaces.
 set shiftwidth=4
@@ -32,12 +27,6 @@ set tabstop=4
 
 " Use space characters instead of tabs.
 set expandtab
-
-" Do not save backup files.
-set nobackup
-
-" I don't want the swapfiles
-set noswapfile
 
 " Do not let cursor scroll below or above N number of lines when scrolling.
 "set scrolloff=10
