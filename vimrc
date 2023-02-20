@@ -80,7 +80,27 @@ set wildmode=list:longest
 " Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
+" Undo config: https://vi.stackexchange.com/questions/6/how-can-i-use-the-undofile
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+if !isdirectory($HOME."/.vim/undo-dir")
+    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+set undodir=~/.vim/undo-dir
+set undofile
 
+" back up config: https://stackoverflow.com/questions/25318875/how-to-configure-vim-backup-directories
+set backup
+if !isdirectory($HOME."/.vim/backupdir")
+    silent! execute "!mkdir ~/.vim/backupdir"
+endif
+set backupdir=~/.vim/backupdir
+
+" change the cursor when the mode changes 
+let &t_SI = "\<esc>[5 q"
+let &t_SR = "\<esc>[5 q"
+let &t_EI = "\<esc>[2 q"
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
@@ -92,6 +112,10 @@ call plug#begin('~/.vim/plugged')
     " for the filetree 
     Plug 'preservim/nerdtree'
     Plug 'flazz/vim-colorschemes'
+"     Plug 'quarto-dev/quarto-nvim'
+"     Plug 'neovim/nvim-lspconfig'
+"     Plug 'jmbuhr/otter.nvim'
+
 
 call plug#end()
 
@@ -104,12 +128,17 @@ call plug#end()
 
 "MAPPINGS --------------------------------------------------------------- {{{
 
-" skip visual lines not technical ones
-nnoremap j gj
-nnoremap k gk
-
 "inoremap <f8> <Esc>
 imap jj <Esc>
+
+" navigate visual lines not logical ones
+nmap j gj
+nmap k gk
+nmap <Up> gk
+nmap <Down> gj
+nmap <C-c> "+y
+nmap <C-v> "+p
+
 
 " filetree plugin mappings
 nnoremap <leader>n :NERDTree<CR>
@@ -130,27 +159,31 @@ nnoremap <C-f> :NERDTreeFind<CR>
 "    autocmd FileType vim setlocal foldmethod=marker
 "augroup END
 
-func! WordProcessorMode()
-    setlocal textwidth=80
-    setlocal smartindent
-    setlocal noexpandtab
-    " spellcheck on
-    setlocal spell spelllang=en_us
-    " remove spellcheck highlighting style
-    hi clear SpellBad
-    " add underline style instead
-    hi SpellBad cterm=underline
-    " do the same for capitalization 
-    hi clear SpellCap
-    hi SpellCap cterm=underline
-endfu
+" func! WordProcessorMode()
+"     setlocal textwidth=80
+"     setlocal smartindent
+"     setlocal noexpandtab
+"     " spellcheck on
+"     setlocal spell spelllang=en_us
+"     " remove spellcheck highlighting style
+"     hi clear SpellBad
+"     " add underline style instead
+"     hi SpellBad cterm=underline
+"     " do the same for capitalization 
+"     hi clear SpellCap
+"     hi SpellCap cterm=underline
+" endfu
 
-func! WordProcessorModeSoftWrap()
+func! WordProcessorMode()
     set textwidth=0
     set wrapmargin=0
     set nonumber
     set wrap
-    set linebreak " (optional - breaks by word rather than character)
+    " Have j and k navigate visual lines rather than logical ones
+    nmap j gj
+    nmap k gk
+    " (optional - breaks by word rather than character)
+    set linebreak
     setlocal smartindent
     setlocal noexpandtab
     " spellcheck on
