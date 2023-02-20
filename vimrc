@@ -135,6 +135,9 @@ nnoremap <C-n> :NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
 
+" do nothing on ctrl z
+nnoremap <c-z> <nop>
+
 " }}}
 
 
