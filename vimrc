@@ -141,6 +141,10 @@ nnoremap <C-f> :NERDTreeFind<CR>
 " do nothing on ctrl z
 nnoremap <c-z> <nop>
 
+" modified from here: https://github.com/jalvesaq/Nvim-R/issues/85
+autocmd FileType r inoremap <buffer> <C-p> <Esc>:normal! a%>%<CR>a 
+autocmd FileType rnoweb inoremap <buffer> <C-p> <Esc>:normal!a %>%<CR>a 
+autocmd FileType rmd inoremap <buffer> <C-p> <Esc>:normal! a%>%<CR>a 
 " }}}
 
 
