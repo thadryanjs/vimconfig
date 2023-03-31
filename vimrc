@@ -101,6 +101,9 @@ call plug#begin('~/.vim/plugged')
     " for the filetree 
     Plug 'preservim/nerdtree'
     Plug 'flazz/vim-colorschemes'
+    Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'quarto-dev/quarto-vim'
+    Plug 'vim-pandoc/vim-rmarkdown'
 "     Plug 'quarto-dev/quarto-nvim'
 "     Plug 'neovim/nvim-lspconfig'
 "     Plug 'jmbuhr/otter.nvim'
@@ -189,6 +192,18 @@ func! WordProcessorMode()
     hi SpellCap cterm=underline
 endfu
 
+" turn on spellcheck without the other stuff (for markdown, etc)
+func! Spellcheck()
+    " spellcheck on
+    setlocal spell spelllang=en_us
+    " remove spellcheck highlighting style
+    hi clear SpellBad
+    " add underline style instead
+    hi SpellBad cterm=underline
+    " do the same for capitalization
+    hi clear SpellCap
+    hi SpellCap cterm=underline
+endfu    
 " }}}
 
 
@@ -219,6 +234,8 @@ endfu
 " MACROS  --------------------------------------------------------------- {{{
 
 let @f=':NERDTree:vert botright term20>:term'
+" let @d="a %>%^M^I^[<80><fd>a"
+let @d = "a %>% \r  "
 
 " }}}
 
