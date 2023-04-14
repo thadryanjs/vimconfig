@@ -18,6 +18,11 @@ syntax on
 
 " Add numbers to each line on the left-hand side.
 set number
+set relativenumber
+set relativenumber
+set relativenumber
+set relativenumber
+set relativenumber
 
 " Set shift width to 4 spaces.
 set shiftwidth=4
@@ -122,6 +127,9 @@ call plug#end()
 
 "inoremap <f8> <Esc>
 imap jj <Esc>
+noremap <silent> <C-S> :update<CR>
+vnoremap <silent> <C-S> <C-C>:update<CR>
+inoremap <silent> <C-S> <C-O>:update<CR>
 
 " navigate visual lines not logical ones
 nmap j gj
@@ -210,7 +218,25 @@ func! Spellcheck()
 endfu    
 " }}}
 
+func! WordCount()
+    :w !wc
+endfu
 
+
+let g:word_count=wordcount().words
+function LiveWordCount()
+    if has_key(wordcount(),'visual_words')
+        let g:word_count=wordcount().visual_words."/".wordcount().words " count selected words
+    else
+        let g:word_count=wordcount().cursor_words."/".wordcount().words " or shows words 'so far'
+    endif
+    return g:word_count
+endfunction
+
+function ToggleWordCount()
+    set statusline+=\ w:%{LiveWordCount()},
+    set laststatus=2
+endfunction
 
 " STATUS LINE ------------------------------------------------------------ {{{
 
@@ -237,9 +263,7 @@ endfu
 
 " MACROS  --------------------------------------------------------------- {{{
 
-let @f=':NERDTree:vert botright term20>:term'
-" let @d="a %>%^M^I^[<80><fd>a"
-let @d = "a %>% \r  "
+let @f=':NERDTree␗␗:vert botright term␗␗␗␗␗20>␗␗␗␗:term␗␒␗␗'
 
 " }}}
 
