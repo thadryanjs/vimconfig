@@ -19,10 +19,6 @@ syntax on
 " Add numbers to each line on the left-hand side.
 set number
 set relativenumber
-set relativenumber
-set relativenumber
-set relativenumber
-set relativenumber
 
 " Set shift width to 4 spaces.
 set shiftwidth=4
@@ -91,10 +87,21 @@ if !isdirectory($HOME."/.vim/backupdir")
 endif
 set backupdir=~/.vim/backupdir
 
-" change the cursor when the mode changes 
-let &t_SI = "\<esc>[5 q"
-let &t_SR = "\<esc>[5 q"
-let &t_EI = "\<esc>[2 q"
+
+" change the cursor when the mode changes (this one works on my local machine)
+" let &t_SI = "\<esc>[5 q"
+" let &t_SR = "\<esc>[5 q"
+" let &t_EI = "\<esc>[2 q"
+
+" (this one works on discovery)
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+" reset the cursor on start (for older versions of vim, usually not required)
+" augroup myCmds
+" au!
+" autocmd VimEnter * silent !echo -ne "\e[2 q"
+" augroup END
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
@@ -107,11 +114,15 @@ call plug#begin('~/.vim/plugged')
     Plug 'preservim/nerdtree'
     Plug 'flazz/vim-colorschemes'
     Plug 'vim-pandoc/vim-pandoc-syntax'
-    Plug 'quarto-dev/quarto-vim'
+"    Plug 'quarto-dev/quarto-vim'
     Plug 'vim-pandoc/vim-rmarkdown'
 "     Plug 'quarto-dev/quarto-nvim'
 "     Plug 'neovim/nvim-lspconfig'
 "     Plug 'jmbuhr/otter.nvim'
+    Plug 'preservim/nerdcommenter'
+    "Plug 'dense-analysis/ale'
+    Plug 'jalvesaq/Nvim-R'
+
 
 
 call plug#end()
@@ -119,8 +130,35 @@ call plug#end()
 " }}}
 
 " now we can use the colorscheme color
-" colorscheme Atelier_SavannaDark
+colorscheme Atelier_SavannaDark
 
+
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+" let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'r': { 'left': '# ' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
 
 
 "MAPPINGS --------------------------------------------------------------- {{{
@@ -130,6 +168,8 @@ imap jj <Esc>
 noremap <silent> <C-S> :update<CR>
 vnoremap <silent> <C-S> <C-C>:update<CR>
 inoremap <silent> <C-S> <C-O>:update<CR>
+nnoremap q <c-v>
+
 
 " navigate visual lines not logical ones
 nmap j gj
@@ -150,9 +190,9 @@ nnoremap <C-f> :NERDTreeFind<CR>
 nnoremap <c-z> <nop>
 
 " modified from here: https://github.com/jalvesaq/Nvim-R/issues/85
-autocmd FileType r inoremap <buffer> <C-p> <Esc>:normal! a%>%<CR>a 
-autocmd FileType rnoweb inoremap <buffer> <C-p> <Esc>:normal!a %>%<CR>a 
-autocmd FileType rmd inoremap <buffer> <C-p> <Esc>:normal! a%>%<CR>a 
+autocmd FileType r inoremap <buffer> <C-p> <Esc>:normal! a %>%<CR>a
+autocmd FileType rnoweb inoremap <buffer> <C-p> <Esc>:normal!a %>%<CR>a
+autocmd FileType rmd inoremap <buffer> <C-p> <Esc>:normal! a %>%<CR>a
 " }}}
 
 
@@ -165,21 +205,6 @@ autocmd FileType rmd inoremap <buffer> <C-p> <Esc>:normal! a%>%<CR>a
 "    autocmd!
 "    autocmd FileType vim setlocal foldmethod=marker
 "augroup END
-
-" func! WordProcessorMode()
-"     setlocal textwidth=80
-"     setlocal smartindent
-"     setlocal noexpandtab
-"     " spellcheck on
-"     setlocal spell spelllang=en_us
-"     " remove spellcheck highlighting style
-"     hi clear SpellBad
-"     " add underline style instead
-"     hi SpellBad cterm=underline
-"     " do the same for capitalization 
-"     hi clear SpellCap
-"     hi SpellCap cterm=underline
-" endfu
 
 func! WordProcessorMode()
     set textwidth=0
@@ -216,27 +241,10 @@ func! Spellcheck()
     hi clear SpellCap
     hi SpellCap cterm=underline
 endfu    
+
 " }}}
 
-func! WordCount()
-    :w !wc
-endfu
 
-
-let g:word_count=wordcount().words
-function LiveWordCount()
-    if has_key(wordcount(),'visual_words')
-        let g:word_count=wordcount().visual_words."/".wordcount().words " count selected words
-    else
-        let g:word_count=wordcount().cursor_words."/".wordcount().words " or shows words 'so far'
-    endif
-    return g:word_count
-endfunction
-
-function ToggleWordCount()
-    set statusline+=\ w:%{LiveWordCount()},
-    set laststatus=2
-endfunction
 
 " STATUS LINE ------------------------------------------------------------ {{{
 
@@ -263,7 +271,6 @@ endfunction
 
 " MACROS  --------------------------------------------------------------- {{{
 
-let @f=':NERDTree␗␗:vert botright term␗␗␗␗␗20>␗␗␗␗:term␗␒␗␗'
 
 " }}}
 
