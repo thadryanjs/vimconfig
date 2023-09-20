@@ -107,30 +107,20 @@ let &t_EI = "\e[2 q"
 
 call plug#begin('~/.vim/plugged')
 
-    " linter - too fancy, will learn to configure/simplify it later
-    " Plug 'dense-analysis/ale'
-    
-    " for the filetree 
     Plug 'preservim/nerdtree'
     Plug 'flazz/vim-colorschemes'
-    Plug 'vim-pandoc/vim-pandoc-syntax'
-"    Plug 'quarto-dev/quarto-vim'
     Plug 'vim-pandoc/vim-rmarkdown'
-"     Plug 'quarto-dev/quarto-nvim'
-"     Plug 'neovim/nvim-lspconfig'
-"     Plug 'jmbuhr/otter.nvim'
     Plug 'preservim/nerdcommenter'
-    "Plug 'dense-analysis/ale'
-    Plug 'jalvesaq/Nvim-R'
-
-
+    Plug 'liuchengxu/vim-which-key'
+    Plug 'rose-pine/vim'
+    Plug 'tpope/vim-surround'
 
 call plug#end()
 
 " }}}
 
 " now we can use the colorscheme color
-colorscheme Atelier_SavannaDark
+colorscheme rosepine 
 
 
 " Create default mappings
@@ -161,6 +151,9 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 
+" Start NERDTree and put the cursor back in the other window.
+autocmd VimEnter * NERDTree | wincmd p
+
 "MAPPINGS --------------------------------------------------------------- {{{
 
 "inoremap <f8> <Esc>
@@ -170,6 +163,13 @@ vnoremap <silent> <C-S> <C-C>:update<CR>
 inoremap <silent> <C-S> <C-O>:update<CR>
 nnoremap q <c-v>
 
+" don't freeze on ctrl s
+noremap <silent> <C-S> :update<CR>
+vnoremap <silent> <C-S> <C-C>:update<CR>
+inoremap <silent> <C-S> <C-O>:update<CR>
+" save on ctrl s
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
 
 " navigate visual lines not logical ones
 nmap j gj
@@ -183,9 +183,8 @@ nmap <C-v> "+p
 " filetree plugin mappings
 nnoremap <leader>n :NERDTree<CR>
 nnoremap <C-n> :NERDTreeFocus<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
 nnoremap <C-f> :NERDTreeFind<CR>
-
+nnoremap <C-b> :NERDTreeToggle<CR>
 " do nothing on ctrl z
 nnoremap <c-z> <nop>
 
